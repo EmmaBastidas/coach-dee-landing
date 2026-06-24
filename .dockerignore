@@ -3,7 +3,6 @@
 .gitignore
 .dockerignore
 Dockerfile
-nginx.conf
 README.md
 *.log
 .DS_Store
