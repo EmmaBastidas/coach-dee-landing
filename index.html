@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Coach Demetrius Santos — Individualized Performance Coaching" />
   <meta property="og:description" content="Most athletes don't need more workouts. They need a better plan. Individualized coaching from a real box owner — never a template." />
-  <meta property="og:image" content="images/hero.jpg" />
+  <meta property="og:image" content="https://www.coachdsantos.com/images/hero.jpg" />
   <meta property="og:url" content="https://www.coachdsantos.com" />
   <meta name="twitter:card" content="summary_large_image" />
 
@@ -52,12 +52,13 @@
       },
     };
   </script>
-  <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     :root { --tracking-label: 0.14em; }
+    /* Offset for the fixed 64px header so anchor jumps (and the hero) aren't hidden under the menu */
+    html { scroll-padding-top: 5rem; }
     body { font-family: 'Switzer', system-ui, sans-serif; background: #070B22; }
     h1,h2,h3,.display { font-family: '"Saira Condensed"', 'Saira Condensed', sans-serif; letter-spacing: 0.01em; line-height: 1.04; }
     .eyebrow { font-family: '"Geist Mono"', 'Geist Mono', monospace; text-transform: uppercase; letter-spacing: var(--tracking-label); }
@@ -548,20 +549,20 @@
 
       <div class="grid sm:grid-cols-2 gap-5">
         <div>
-          <label class="block text-sm font-semibold mb-2">First name *</label>
-          <input name="First name" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
+          <label for="c-first-name" class="block text-sm font-semibold mb-2">First name *</label>
+          <input id="c-first-name" name="First name" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
         </div>
         <div>
-          <label class="block text-sm font-semibold mb-2">Last name *</label>
-          <input name="Last name" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
+          <label for="c-last-name" class="block text-sm font-semibold mb-2">Last name *</label>
+          <input id="c-last-name" name="Last name" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
         </div>
         <div>
-          <label class="block text-sm font-semibold mb-2">Phone number *</label>
-          <input name="Phone number" type="tel" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
+          <label for="c-phone" class="block text-sm font-semibold mb-2">Phone number *</label>
+          <input id="c-phone" name="Phone number" type="tel" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
         </div>
         <div>
-          <label class="block text-sm font-semibold mb-2">Email *</label>
-          <input name="Email" type="email" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
+          <label for="c-email" class="block text-sm font-semibold mb-2">Email *</label>
+          <input id="c-email" name="Email" type="email" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
         </div>
       </div>
 
@@ -614,8 +615,8 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-2">3. Why do you want a coach? *</label>
-        <textarea name="Q3 - Why do you want a coach" required rows="3" class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" placeholder="Tell me what you're hoping to get out of coaching."></textarea>
+        <label for="c-why" class="block text-sm font-semibold mb-2">3. Why do you want a coach? *</label>
+        <textarea id="c-why" name="Q3 - Why do you want a coach" required rows="3" class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" placeholder="Tell me what you're hoping to get out of coaching."></textarea>
       </div>
 
       <div>
@@ -665,26 +666,26 @@
 
       <div class="grid sm:grid-cols-2 gap-5">
         <div>
-          <label class="block text-sm font-semibold mb-2">First name *</label>
-          <input name="First name" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
+          <label for="n-first-name" class="block text-sm font-semibold mb-2">First name *</label>
+          <input id="n-first-name" name="First name" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
         </div>
         <div>
-          <label class="block text-sm font-semibold mb-2">Last name *</label>
-          <input name="Last name" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
+          <label for="n-last-name" class="block text-sm font-semibold mb-2">Last name *</label>
+          <input id="n-last-name" name="Last name" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
         </div>
         <div>
-          <label class="block text-sm font-semibold mb-2">Phone number *</label>
-          <input name="Phone number" type="tel" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
+          <label for="n-phone" class="block text-sm font-semibold mb-2">Phone number *</label>
+          <input id="n-phone" name="Phone number" type="tel" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
         </div>
         <div>
-          <label class="block text-sm font-semibold mb-2">Email *</label>
-          <input name="Email" type="email" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
+          <label for="n-email" class="block text-sm font-semibold mb-2">Email *</label>
+          <input id="n-email" name="Email" type="email" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
         </div>
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-2">How did you hear about me?</label>
-        <input name="How did you hear about me" class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
+        <label for="n-hear" class="block text-sm font-semibold mb-2">How did you hear about me?</label>
+        <input id="n-hear" name="How did you hear about me" class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition" />
       </div>
 
       <div class="space-y-3 bg-ink/40 border border-white/10 rounded-lg p-4">
@@ -712,13 +713,13 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-2">2. What are your short-term goals? (next 3–6 months) *</label>
-        <textarea name="Short-term goals (3-6 months)" required rows="3" class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition"></textarea>
+        <label for="n-short-goals" class="block text-sm font-semibold mb-2">2. What are your short-term goals? (next 3–6 months) *</label>
+        <textarea id="n-short-goals" name="Short-term goals (3-6 months)" required rows="3" class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition"></textarea>
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-2">3. What are your long-term goals? (next 6–12 months) *</label>
-        <textarea name="Long-term goals (6-12 months)" required rows="3" class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition"></textarea>
+        <label for="n-long-goals" class="block text-sm font-semibold mb-2">3. What are your long-term goals? (next 6–12 months) *</label>
+        <textarea id="n-long-goals" name="Long-term goals (6-12 months)" required rows="3" class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition"></textarea>
       </div>
 
       <div>
@@ -734,8 +735,8 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-2">5. What date would you like to start? *</label>
-        <input name="Preferred start date" type="date" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition [color-scheme:dark]" />
+        <label for="n-start-date" class="block text-sm font-semibold mb-2">5. What date would you like to start? *</label>
+        <input id="n-start-date" name="Preferred start date" type="date" required class="w-full bg-ink/60 border border-white/10 rounded-lg px-4 py-3 focus:border-blue focus-ring outline-none transition [color-scheme:dark]" />
       </div>
 
       <!-- honeypot -->
@@ -755,18 +756,16 @@
       <div>
         <div class="flex items-center gap-3 mb-4">
           <img src="images/logo-ds.svg" alt="DS — Coach Demetrius Santos" class="h-10 w-auto" />
-          <span class="font-display font-extrabold text-chalk text-lg leading-none">DEMETRIUS<br>SANTOS</span>
+          <span class="font-display font-extrabold text-chalk text-lg leading-none">DEMETRIUS<br />SANTOS</span>
         </div>
-        <p class="text-mist/60 text-sm leading-relaxed">Individualized Performance Coaching.<br>From the box floor to the podium.</p>
+        <p class="text-mist/60 text-sm leading-relaxed">Individualized Performance Coaching.<br />From the box floor to the podium.</p>
       </div>
       <div class="text-sm">
         <p class="eyebrow text-xs text-mist/80 mb-3">Connect</p>
         <ul class="space-y-2 text-mist/60">
           <li><a href="https://www.instagram.com/coach_demetrius" target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-chalk transition"><i data-lucide="instagram" class="w-4 h-4"></i> @coach_demetrius</a></li>
           <li><a href="https://www.unioncitycrossfit.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-chalk transition"><i data-lucide="map-pin" class="w-4 h-4"></i> Union City CrossFit</a></li>
-          <!-- OPTIONAL — phone (Emma to decide if it goes live). To enable, uncomment:
-          <li><a href="tel:+10000000000" class="inline-flex items-center gap-2 hover:text-chalk transition"><i data-lucide="phone" class="w-4 h-4"></i> +1 (000) 000-0000</a></li>
-          -->
+          <li><a href="tel:+19736518734" class="inline-flex items-center gap-2 hover:text-chalk transition"><i data-lucide="phone" class="w-4 h-4"></i> +1 (973) 651-8734</a></li>
         </ul>
       </div>
       <div class="text-sm">
@@ -847,25 +846,27 @@
       }
     }
 
-    // ===== Scroll-reveal =====
+    // ===== Scroll-reveal (IntersectionObserver — each block animates in as it enters the viewport) =====
     document.addEventListener('DOMContentLoaded', () => {
-      let targets = [...document.querySelectorAll('section:not(#top) > div, footer > div')];
+      const targets = [...document.querySelectorAll('section:not(#top) > div, footer > div')];
       targets.forEach(el => el.classList.add('reveal'));
-      let ticking = false;
-      const sweep = () => {
-        ticking = false;
-        const vh = window.innerHeight;
-        targets = targets.filter(el => {
-          const r = el.getBoundingClientRect();
-          if (r.top < vh - 60 || r.bottom < vh + 80) { el.classList.add('in'); return false; }
-          return true;
+
+      // No observer support (or reduced motion handled in CSS) → just show everything.
+      if (!('IntersectionObserver' in window)) {
+        targets.forEach(el => el.classList.add('in'));
+        return;
+      }
+
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            obs.unobserve(entry.target);
+          }
         });
-      };
-      const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(sweep); } };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll, { passive: true });
-      window.addEventListener('load', sweep);
-      sweep();
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+
+      targets.forEach(el => io.observe(el));
     });
 
     // Render icons (re-run after Alpine paints dynamic content)
