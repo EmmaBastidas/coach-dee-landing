@@ -10,4 +10,5 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # README ni .git — .dockerignore los excluye del contexto de build).
 COPY index.html /usr/share/nginx/html/index.html
 COPY link /usr/share/nginx/html/link
+COPY privacy /usr/share/nginx/html/privacy
 COPY images /usr/share/nginx/html/images
