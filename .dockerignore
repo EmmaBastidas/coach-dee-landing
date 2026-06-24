@@ -1,0 +1,9 @@
+# No incluir en la imagen: control de versiones, config de build y docs.
+.git
+.gitignore
+.dockerignore
+Dockerfile
+nginx.conf
+README.md
+*.log
+.DS_Store
