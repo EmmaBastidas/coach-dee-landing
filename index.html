@@ -31,7 +31,7 @@
       theme: {
         extend: {
           colors: {
-            ink:    '#0D1A33', // page background (navy profundo)
+            ink:    '#080D1A', // page background (negro con susurro navy)
             navy:   '#16264A', // surface (cards, navbar) — navy rico
             surf:   '#1D3160', // elevated surface / hover
             indigo: '#27407E', // deep royal tints/borders
@@ -61,7 +61,7 @@
     :root { --tracking-label: 0.14em; }
     /* Offset for the fixed 64px header so anchor jumps (and the hero) aren't hidden under the menu */
     html { scroll-padding-top: 5rem; }
-    body { font-family: 'Switzer', system-ui, sans-serif; background: #0D1A33; background-image: linear-gradient(165deg, #142647 0%, #0D1A33 45%, #0A1224 100%); background-attachment: fixed; }
+    body { font-family: 'Switzer', system-ui, sans-serif; background: #080D1A; background-image: linear-gradient(165deg, #101C33 0%, #080D1A 45%, #04070E 100%); background-attachment: fixed; }
     h1,h2,h3,.display { font-family: '"Saira Condensed"', 'Saira Condensed', sans-serif; letter-spacing: 0.01em; line-height: 1.04; }
     h1, h2 { text-wrap: balance; }
     .eyebrow { font-family: '"Geist Mono"', 'Geist Mono', monospace; text-transform: uppercase; letter-spacing: var(--tracking-label); }
@@ -73,15 +73,15 @@
 
     /* Photo blocks: dark navy scrim for legibility (functional, not decorative) */
     .photo { position: relative; background-size: cover; background-position: center; }
-    .scrim-l::after { content:''; position:absolute; inset:0; background: linear-gradient(90deg, rgba(10,20,41,0.92) 0%, rgba(10,20,41,0.70) 45%, rgba(10,20,41,0.30) 100%); }
-    .scrim-b::after { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(10,20,41,0.45) 0%, rgba(10,20,41,0.55) 55%, rgba(10,20,41,0.92) 100%); }
-    .scrim-soft::after { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(10,20,41,0.55), rgba(10,20,41,0.75)); }
+    .scrim-l::after { content:''; position:absolute; inset:0; background: linear-gradient(90deg, rgba(5,9,18,0.92) 0%, rgba(5,9,18,0.70) 45%, rgba(5,9,18,0.30) 100%); }
+    .scrim-b::after { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(5,9,18,0.45) 0%, rgba(5,9,18,0.55) 55%, rgba(5,9,18,0.92) 100%); }
+    .scrim-soft::after { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(5,9,18,0.55), rgba(5,9,18,0.75)); }
     .photo > * { position: relative; z-index: 1; }
 
     /* Video scrims (hero reads left-to-right; band reads center) */
-    .scrim-hero { background: linear-gradient(90deg, rgba(10,20,41,0.93) 0%, rgba(10,20,41,0.68) 45%, rgba(10,20,41,0.28) 100%),
-                              linear-gradient(180deg, rgba(10,20,41,0.12) 55%, rgba(10,20,41,0.97) 100%); }
-    .scrim-band { background: linear-gradient(180deg, rgba(10,20,41,0.82) 0%, rgba(10,20,41,0.66) 50%, rgba(10,20,41,0.92) 100%); }
+    .scrim-hero { background: linear-gradient(90deg, rgba(5,9,18,0.93) 0%, rgba(5,9,18,0.68) 45%, rgba(5,9,18,0.28) 100%),
+                              linear-gradient(180deg, rgba(5,9,18,0.12) 55%, rgba(5,9,18,0.97) 100%); }
+    .scrim-band { background: linear-gradient(180deg, rgba(5,9,18,0.82) 0%, rgba(5,9,18,0.66) 50%, rgba(5,9,18,0.92) 100%); }
 
     .focus-ring:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(48,81,159,0.65); }
 
