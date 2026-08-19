@@ -3,8 +3,9 @@
 # se usa: ahí los archivos van directos a public_html.
 FROM nginx:alpine
 
-# Config de nginx con cabeceras de seguridad + CSP (ver nginx.conf).
+# Config de nginx + cabeceras de seguridad compartidas (ver nginx.conf).
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY security-headers.conf /etc/nginx/security-headers.conf
 
 # Copiar solo los assets del sitio al web root (no el Dockerfile, nginx.conf,
 # README ni .git — .dockerignore los excluye del contexto de build).

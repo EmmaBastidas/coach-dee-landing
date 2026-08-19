@@ -696,7 +696,8 @@
         </div>
 
         <!-- honeypot -->
-        <input type="text" name="_gotcha" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+        <!-- botcheck = honeypot REAL de Web3Forms (si un bot lo marca, el envío se descarta) -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
         <p x-show="error" x-text="error" class="text-red-400 text-sm mt-5"></p>
 
         <!-- wizard nav -->
@@ -817,7 +818,8 @@
         </div>
 
         <!-- honeypot -->
-        <input type="text" name="_gotcha" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+        <!-- botcheck = honeypot REAL de Web3Forms (si un bot lo marca, el envío se descarta) -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
         <p x-show="error" x-text="error" class="text-red-400 text-sm mt-5"></p>
 
         <!-- wizard nav -->
@@ -913,7 +915,7 @@
       </div>
 
       <!-- Mensajes -->
-      <div x-ref="scroll" class="px-4 py-4 space-y-3 overflow-y-auto overscroll-contain" style="max-height: 44vh;">
+      <div x-ref="scroll" aria-live="polite" class="px-4 py-4 space-y-3 overflow-y-auto overscroll-contain" style="max-height: 44vh;">
         <template x-for="(m, i) in msgs" :key="i">
           <div :class="m.who === 'dee' ? 'flex items-end gap-2' : 'flex justify-end'">
             <img x-show="m.who === 'dee'" src="images/dee-avatar.jpg" alt="" width="24" height="24" class="w-6 h-6 rounded-full object-cover shrink-0 mb-0.5" />
@@ -936,7 +938,7 @@
       <!-- Preguntas rápidas -->
       <div class="px-4 pb-3 flex flex-wrap gap-2" x-show="remaining().length">
         <template x-for="f in remaining()" :key="f.id">
-          <button @click="ask(f)"
+          <button @click="ask(f)" :disabled="typing" :class="typing && 'opacity-50'"
                   class="text-xs font-semibold text-sky bg-blue/10 hover:bg-blue/25 border border-blue/30 rounded-full px-3.5 py-2 transition"
                   x-text="f.q"></button>
         </template>
@@ -975,6 +977,7 @@
     //  only changes presentation (steps), never the submitted data.
     // ===========================================================
     async function submitForm(event, state) {
+      if (state.sending) return;
       state.error = '';
       const form = event.target;
       state.sending = true;
@@ -985,11 +988,16 @@
       const athleteEmail = formData.get('Email') || formData.get('email');
       if (athleteEmail) formData.set('replyto', athleteEmail);
 
+      // Timeout: una red móvil colgada no puede dejar al atleta en "Sending…" infinito.
+      const ctrl = new AbortController();
+      const timeout = setTimeout(() => ctrl.abort(), 15000);
+
       try {
         const res = await fetch(form.action, {
           method: "POST",
           body: formData,
           headers: { 'Accept': 'application/json' },
+          signal: ctrl.signal,
         });
         const data = await res.json().catch(() => ({}));
         if (res.ok && data.success) {
@@ -1000,8 +1008,11 @@
           state.error = data.message || "Something went wrong. Please try again or email dsantosucc@gmail.com.";
         }
       } catch (e) {
-        state.error = "Network error. Please try again or email dsantosucc@gmail.com.";
+        state.error = e.name === 'AbortError'
+          ? "This is taking too long — please try again or email dsantosucc@gmail.com."
+          : "Network error. Please try again or email dsantosucc@gmail.com.";
       } finally {
+        clearTimeout(timeout);
         state.sending = false;
       }
     }
@@ -1098,6 +1109,7 @@
         greet() { this.msgs.push({ who: 'dee', text: "Hey — I'm Coach Dee. Ask me anything about how I coach, or message me directly on WhatsApp." }); },
         remaining() { return this.faqs.filter(f => !this.asked.includes(f.id)); },
         ask(f) {
+          if (this.typing) return; // evita conversación desordenada por doble clic
           this.asked.push(f.id);
           this.msgs.push({ who: 'me', text: f.q });
           this.typing = true; this.scrollDown();
@@ -1186,7 +1198,6 @@
     function refreshIcons() { if (window.lucide) lucide.createIcons(); }
     document.addEventListener('DOMContentLoaded', refreshIcons);
     document.addEventListener('alpine:initialized', () => setTimeout(refreshIcons, 50));
-    document.addEventListener('click', () => setTimeout(refreshIcons, 50));
   </script>
 </body>
 </html>
