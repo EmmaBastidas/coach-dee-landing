@@ -27,9 +27,9 @@
     tailwind.config = {
       theme: { extend: {
         colors: {
-          ink:'#070B22', navy:'#0E1640', surf:'#16204C', indigo:'#1C2A6E',
-          blue:'#3B5BE0', sky:'#5B78F0', royal:'#2638B8', link:'#6E89F0',
-          mist:'#ECEDF5', chalk:'#F7F8FC', muted:'#8A93A8',
+          ink:'#080D1A', navy:'#16264A', surf:'#1D3160', indigo:'#27407E',
+          blue:'#30519F', sky:'#8CA6DF', royal:'#264189', link:'#9DB4EA',
+          mist:'#EAEEF6', chalk:'#F7F9FD', muted:'#8B95AF',
         },
         fontFamily: {
           display:['"Saira Condensed"','Oswald','sans-serif'],
@@ -42,13 +42,13 @@
   <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <style>
-    body { font-family:'Switzer',system-ui,sans-serif; background:#070B22; }
+    body { font-family:'Switzer',system-ui,sans-serif; background:#080D1A; background-image:linear-gradient(165deg,#101C33 0%,#080D1A 45%,#04070E 100%); background-attachment:fixed; }
     h1,.display { font-family:'"Saira Condensed"','Saira Condensed',sans-serif; letter-spacing:.01em; line-height:1.02; }
     .eyebrow { font-family:'"Geist Mono"','Geist Mono',monospace; text-transform:uppercase; letter-spacing:.14em; }
-    .focus-ring:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(59,91,224,.55); }
+    .focus-ring:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(48,81,159,.65); }
     /* dark navy scrim so the buttons + text read over the photo */
     .scrim::after{ content:''; position:absolute; inset:0;
-      background:linear-gradient(180deg, rgba(7,11,34,.40) 0%, rgba(7,11,34,.45) 38%, rgba(7,11,34,.97) 80%); }
+      background:linear-gradient(180deg, rgba(5,9,18,.42) 0%, rgba(5,9,18,.48) 38%, rgba(5,9,18,.97) 80%); }
     .scrim>*{ position:relative; z-index:1; }
     .btn { transition:background-color .18s ease, border-color .18s ease, transform .06s ease; }
     .btn:active{ transform:translateY(1px); }
@@ -75,6 +75,8 @@
 
       <!-- Identity -->
       <div class="text-center mb-7">
+        <img src="/images/dee-avatar.jpg" alt="Coach Demetrius Santos" width="96" height="96"
+             class="w-24 h-24 rounded-full object-cover border-2 border-blue/60 shadow-lg shadow-black/50 mx-auto mb-5" />
         <h1 class="font-display font-extrabold text-chalk text-4xl sm:text-5xl">COACH DEMETRIUS SANTOS</h1>
         <p class="eyebrow text-[11px] text-sky mt-3">Individualized Performance Coaching</p>
         <p class="text-mist/75 text-sm mt-2">CrossFit · HYROX · Strength · Endurance</p>

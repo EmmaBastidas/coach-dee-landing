@@ -94,6 +94,11 @@
     /* Testimonial slider dots */
     .dot { width: 8px; height: 8px; border-radius: 9999px; background: rgba(176,188,224,0.25); transition: background .3s ease, width .3s ease; }
     .dot.active { background: #8CA6DF; width: 22px; }
+
+    /* Concierge chat typing indicator */
+    .typing-dot { width: 6px; height: 6px; border-radius: 9999px; background: #8CA6DF; animation: typingBounce 1s infinite; }
+    @keyframes typingBounce { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+    @media (prefers-reduced-motion: reduce) { .typing-dot { animation: none; opacity: .6; } }
   </style>
 </head>
 
@@ -859,21 +864,89 @@
     </div>
   </footer>
 
-  <!-- ============ FLOATING WHATSAPP WIDGET ============ -->
-  <!-- WHATSAPP — Dee's number in full international format, digits only.
-       1 (973) 651-8734  →  19736518734  (US country code 1 + area 973 + number).
-       The link opens a WhatsApp chat straight to that number with a prefilled message. -->
-  <a id="wa-float"
-     href="https://wa.me/19736518734?text=Hi%20Coach%20Demetrius%2C%20I%27d%20like%20to%20ask%20about%20coaching."
-     target="_blank" rel="noopener"
-     aria-label="Message Coach Demetrius on WhatsApp"
-     class="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 bg-blue hover:bg-royal transition rounded-full shadow-lg shadow-black/40 pl-4 pr-5 py-3.5 group">
-    <!-- WhatsApp glyph (inline SVG, off-white) -->
-    <svg viewBox="0 0 32 32" class="w-6 h-6 fill-chalk shrink-0" aria-hidden="true">
-      <path d="M16.04 3C9.4 3 4 8.4 4 15.04c0 2.12.56 4.18 1.62 6L4 29l8.13-1.58a12 12 0 0 0 3.9.66h.01C22.68 28.08 28.08 22.68 28.08 16.04 28.08 8.4 22.68 3 16.04 3zm0 22.06h-.01a9.97 9.97 0 0 1-3.6-.66l-.26-.1-4.82.94.96-4.7-.17-.27a9.94 9.94 0 0 1-1.53-5.3c0-5.5 4.48-9.98 9.98-9.98 2.66 0 5.17 1.04 7.05 2.92a9.9 9.9 0 0 1 2.92 7.06c0 5.5-4.48 9.97-9.99 9.97zm5.48-7.47c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z"/>
-    </svg>
-    <span class="hidden sm:inline font-semibold text-chalk text-sm">WhatsApp</span>
-  </a>
+  <!-- ============ COACH DEE CONCIERGE (FAQ guiado + WhatsApp handoff) ============ -->
+  <!-- Nivel 1: respuestas escritas por nosotros (cero IA, cero backend, CSP-safe).
+       El botón lleva la cara de Dee; toda pregunta no cubierta termina en WhatsApp:
+       1 (973) 651-8734 → 19736518734 (código país 1 + área 973 + número). -->
+  <div x-data="deeChat()" class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+
+    <!-- Panel de chat -->
+    <div x-show="open" x-cloak @keydown.escape.window="open=false"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 translate-y-3"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0 translate-y-3"
+         class="w-[372px] max-w-[calc(100vw-2.5rem)] card rounded-2xl overflow-hidden shadow-2xl shadow-black/60 flex flex-col"
+         role="dialog" aria-label="Chat with Coach Dee">
+
+      <!-- Header -->
+      <div class="flex items-center gap-3 px-5 py-4 bg-surf/70 border-b border-white/5">
+        <span class="relative shrink-0">
+          <img src="images/dee-avatar.jpg" alt="Coach Demetrius Santos" width="40" height="40" class="w-10 h-10 rounded-full object-cover" />
+          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-navy" aria-hidden="true"></span>
+        </span>
+        <div class="flex-1 leading-tight">
+          <p class="font-display font-bold text-chalk text-base">Coach Dee</p>
+          <p class="eyebrow text-[9px] text-muted mt-0.5">Quick answers · Real coach</p>
+        </div>
+        <button @click="open=false" class="p-1.5 text-mist/60 hover:text-chalk transition" aria-label="Close chat">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Mensajes -->
+      <div x-ref="scroll" class="px-4 py-4 space-y-3 overflow-y-auto overscroll-contain" style="max-height: 44vh;">
+        <template x-for="(m, i) in msgs" :key="i">
+          <div :class="m.who === 'dee' ? 'flex items-end gap-2' : 'flex justify-end'">
+            <img x-show="m.who === 'dee'" src="images/dee-avatar.jpg" alt="" width="24" height="24" class="w-6 h-6 rounded-full object-cover shrink-0 mb-0.5" />
+            <div :class="m.who === 'dee' ? 'bg-surf/80 text-mist rounded-2xl rounded-bl-md' : 'bg-blue text-chalk rounded-2xl rounded-br-md'"
+                 class="px-4 py-2.5 text-sm leading-relaxed max-w-[85%]">
+              <span x-text="m.text"></span>
+              <a x-show="m.href" :href="m.href" @click="if (m.href && m.href.startsWith('#')) open = false"
+                 class="block mt-1.5 text-link hover:text-sky font-semibold" x-text="m.hrefLabel"></a>
+            </div>
+          </div>
+        </template>
+        <div x-show="typing" class="flex items-end gap-2">
+          <img src="images/dee-avatar.jpg" alt="" width="24" height="24" class="w-6 h-6 rounded-full object-cover shrink-0" />
+          <div class="bg-surf/80 rounded-2xl rounded-bl-md px-4 py-3.5 flex gap-1">
+            <span class="typing-dot"></span><span class="typing-dot" style="animation-delay:.15s"></span><span class="typing-dot" style="animation-delay:.3s"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preguntas rápidas -->
+      <div class="px-4 pb-3 flex flex-wrap gap-2" x-show="remaining().length">
+        <template x-for="f in remaining()" :key="f.id">
+          <button @click="ask(f)"
+                  class="text-xs font-semibold text-sky bg-blue/10 hover:bg-blue/25 border border-blue/30 rounded-full px-3.5 py-2 transition"
+                  x-text="f.q"></button>
+        </template>
+      </div>
+
+      <!-- Handoff a WhatsApp -->
+      <div class="p-4 pt-2 border-t border-white/5">
+        <a href="https://wa.me/19736518734?text=Hi%20Coach%20Demetrius%2C%20I%27d%20like%20to%20ask%20about%20coaching."
+           target="_blank" rel="noopener"
+           class="flex items-center justify-center gap-2.5 bg-blue hover:bg-royal transition rounded-xl px-5 py-3.5 text-chalk font-semibold text-sm focus-ring">
+          <svg viewBox="0 0 32 32" class="w-5 h-5 fill-chalk shrink-0" aria-hidden="true">
+            <path d="M16.04 3C9.4 3 4 8.4 4 15.04c0 2.12.56 4.18 1.62 6L4 29l8.13-1.58a12 12 0 0 0 3.9.66h.01C22.68 28.08 28.08 22.68 28.08 16.04 28.08 8.4 22.68 3 16.04 3zm0 22.06h-.01a9.97 9.97 0 0 1-3.6-.66l-.26-.1-4.82.94.96-4.7-.17-.27a9.94 9.94 0 0 1-1.53-5.3c0-5.5 4.48-9.98 9.98-9.98 2.66 0 5.17 1.04 7.05 2.92a9.9 9.9 0 0 1 2.92 7.06c0 5.5-4.48 9.97-9.99 9.97zm5.48-7.47c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z"/>
+          </svg>
+          Chat with me on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Botón lanzador (la cara de Dee) -->
+    <button @click="toggle()"
+            class="flex items-center gap-3 bg-blue hover:bg-royal transition rounded-full shadow-lg shadow-black/40 pl-1.5 pr-5 py-1.5 focus-ring"
+            :aria-expanded="open" aria-label="Chat with Coach Dee">
+      <img src="images/dee-avatar.jpg" alt="" width="44" height="44" class="w-11 h-11 rounded-full object-cover border-2 border-white/25" />
+      <span class="font-semibold text-chalk text-sm" x-text="open ? 'Close chat' : 'Chat with Coach Dee'"></span>
+    </button>
+  </div>
 
   <!-- ============ SCRIPTS ============ -->
   <script>
@@ -981,6 +1054,45 @@
         });
         window.scrollTo(0, 0);
       });
+    }
+
+    // ===== Coach Dee concierge (Alpine) — FAQ guiado con handoff a WhatsApp =====
+    function deeChat() {
+      const faqs = [
+        { id: 'how', q: 'How does coaching work?',
+          a: "No templates. We start with an assessment — goals, weaknesses, training history, life. I design your plan around what's actually limiting you, and I adjust it as you progress. A real person on a loop, not an app." },
+        { id: 'price', q: 'How much does it cost?',
+          a: "There's no menu pricing — every plan is built different. Apply first (it's free), I review it personally, and I'll share your plan and pricing directly.",
+          href: '#apply', hrefLabel: 'Start your assessment →' },
+        { id: 'remote', q: 'Do you coach remotely?',
+          a: "Yes. I own Union City CrossFit in NJ and coach athletes in person and remotely — same standard, same eye, either way." },
+        { id: 'injury', q: "I'm coming back from an injury",
+          a: "That's a specialty here. We build the plan around your limitation with progressive, monitored load — so you come back better than before, not just back.",
+          href: '#injury', hrefLabel: 'Read how →' },
+        { id: 'nutrition', q: 'Do you do nutrition coaching?',
+          a: "Yes — Macro or Macro-Free, built around your training and your life. It has its own application on this page.",
+          href: '#apply', hrefLabel: 'Apply for nutrition →' },
+        { id: 'start', q: 'How do I start?',
+          a: "Start your assessment — no payment to apply. I read every application myself and reply with your next steps.",
+          href: '#apply', hrefLabel: 'Apply now →' },
+      ];
+      return {
+        open: false, typing: false, asked: [], msgs: [], faqs,
+        toggle() { this.open = !this.open; if (this.open && this.msgs.length === 0) this.greet(); },
+        greet() { this.msgs.push({ who: 'dee', text: "Hey — I'm Coach Dee. Ask me anything about how I coach, or message me directly on WhatsApp." }); },
+        remaining() { return this.faqs.filter(f => !this.asked.includes(f.id)); },
+        ask(f) {
+          this.asked.push(f.id);
+          this.msgs.push({ who: 'me', text: f.q });
+          this.typing = true; this.scrollDown();
+          setTimeout(() => {
+            this.typing = false;
+            this.msgs.push({ who: 'dee', text: f.a, href: f.href, hrefLabel: f.hrefLabel });
+            this.scrollDown();
+          }, 750);
+        },
+        scrollDown() { this.$nextTick(() => { const el = this.$refs.scroll; if (el) el.scrollTop = el.scrollHeight; }); },
+      };
     }
 
     // ===== Scroll-reveal for content blocks (IntersectionObserver) =====
