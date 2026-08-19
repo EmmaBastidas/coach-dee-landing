@@ -336,8 +336,11 @@
   </section>
 
   <!-- ============ RETURN STRONGER FROM INJURY ============ -->
-  <section id="injury" class="relative photo scrim-l border-y border-white/5"
+  <!-- Sin border-y: los bordes claros de la foto se funden a negro con los fades. -->
+  <section id="injury" class="relative photo scrim-l"
            style="background-image:url('images/injury.jpg'); background-position: 65% 30%;">
+    <div class="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ink via-ink/70 to-transparent pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-ink via-ink/70 to-transparent pointer-events-none" aria-hidden="true"></div>
     <div data-reveal class="max-w-7xl mx-auto px-5 sm:px-8 py-24 sm:py-32">
       <div class="max-w-2xl">
         <p class="eyebrow text-xs text-sky mb-4">A specialty, not an afterthought</p>
@@ -369,38 +372,51 @@
           Built by a coach, not an algorithm.
         </h2>
       </div>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="card rounded-2xl p-7">
-          <i data-lucide="search-check" class="w-6 h-6 text-sky mb-4"></i>
-          <h3 class="font-display font-bold text-chalk text-lg mb-2">Diagnosis, not templates</h3>
-          <p class="text-mist/70 text-sm leading-relaxed">Assessment → diagnosis → design → adjustment → accountability.</p>
-        </div>
-        <div class="card rounded-2xl p-7">
-          <i data-lucide="user-check" class="w-6 h-6 text-sky mb-4"></i>
-          <h3 class="font-display font-bold text-chalk text-lg mb-2">A real human in the loop</h3>
-          <p class="text-mist/70 text-sm leading-relaxed">I read every application and adjust your plan personally.</p>
-        </div>
-        <div class="card rounded-2xl p-7">
-          <i data-lucide="building-2" class="w-6 h-6 text-sky mb-4"></i>
-          <h3 class="font-display font-bold text-chalk text-lg mb-2">A real box behind it</h3>
-          <p class="text-mist/70 text-sm leading-relaxed">Owner of Union City CrossFit — credibility a 100%-remote coach doesn't have.</p>
-        </div>
-        <div class="card rounded-2xl p-7">
-          <i data-lucide="route" class="w-6 h-6 text-sky mb-4"></i>
-          <h3 class="font-display font-bold text-chalk text-lg mb-2">From the box floor to the podium</h3>
-          <p class="text-mist/70 text-sm leading-relaxed">In front of me or remote — the same eye either way.</p>
-        </div>
-        <div class="card rounded-2xl p-7">
-          <i data-lucide="layers" class="w-6 h-6 text-sky mb-4"></i>
-          <h3 class="font-display font-bold text-chalk text-lg mb-2">Range across disciplines</h3>
-          <p class="text-mist/70 text-sm leading-relaxed">CrossFit, weightlifting, HYROX, endurance, nutrition — more angles than a single-lane coach.</p>
-        </div>
-        <div class="card rounded-2xl p-7">
-          <i data-lucide="handshake" class="w-6 h-6 text-sky mb-4"></i>
-          <h3 class="font-display font-bold text-chalk text-lg mb-2">Closer and more personal</h3>
-          <p class="text-mist/70 text-sm leading-relaxed">Precise before loud. Criterion, never hype.</p>
-        </div>
-      </div>
+      <!-- Lista editorial (sin cards — la página ya carga varias grillas de tarjetas) -->
+      <ul class="max-w-4xl divide-y divide-white/10">
+        <li class="flex items-start gap-5 py-6 first:pt-0">
+          <i data-lucide="search-check" class="w-5 h-5 text-sky mt-1 shrink-0"></i>
+          <div class="sm:flex sm:items-baseline sm:gap-6 flex-1">
+            <h3 class="font-display font-bold text-chalk text-lg sm:w-72 shrink-0">Diagnosis, not templates</h3>
+            <p class="text-mist/65 text-sm leading-relaxed mt-1 sm:mt-0">Assessment → diagnosis → design → adjustment → accountability.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-5 py-6">
+          <i data-lucide="user-check" class="w-5 h-5 text-sky mt-1 shrink-0"></i>
+          <div class="sm:flex sm:items-baseline sm:gap-6 flex-1">
+            <h3 class="font-display font-bold text-chalk text-lg sm:w-72 shrink-0">A real human in the loop</h3>
+            <p class="text-mist/65 text-sm leading-relaxed mt-1 sm:mt-0">I read every application and adjust your plan personally.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-5 py-6">
+          <i data-lucide="building-2" class="w-5 h-5 text-sky mt-1 shrink-0"></i>
+          <div class="sm:flex sm:items-baseline sm:gap-6 flex-1">
+            <h3 class="font-display font-bold text-chalk text-lg sm:w-72 shrink-0">A real box behind it</h3>
+            <p class="text-mist/65 text-sm leading-relaxed mt-1 sm:mt-0">Owner of Union City CrossFit — credibility a 100%-remote coach doesn't have.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-5 py-6">
+          <i data-lucide="route" class="w-5 h-5 text-sky mt-1 shrink-0"></i>
+          <div class="sm:flex sm:items-baseline sm:gap-6 flex-1">
+            <h3 class="font-display font-bold text-chalk text-lg sm:w-72 shrink-0">From the box floor to the podium</h3>
+            <p class="text-mist/65 text-sm leading-relaxed mt-1 sm:mt-0">In front of me or remote — the same eye either way.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-5 py-6">
+          <i data-lucide="layers" class="w-5 h-5 text-sky mt-1 shrink-0"></i>
+          <div class="sm:flex sm:items-baseline sm:gap-6 flex-1">
+            <h3 class="font-display font-bold text-chalk text-lg sm:w-72 shrink-0">Range across disciplines</h3>
+            <p class="text-mist/65 text-sm leading-relaxed mt-1 sm:mt-0">CrossFit, weightlifting, HYROX, endurance, nutrition — more angles than a single-lane coach.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-5 py-6 last:pb-0">
+          <i data-lucide="handshake" class="w-5 h-5 text-sky mt-1 shrink-0"></i>
+          <div class="sm:flex sm:items-baseline sm:gap-6 flex-1">
+            <h3 class="font-display font-bold text-chalk text-lg sm:w-72 shrink-0">Closer and more personal</h3>
+            <p class="text-mist/65 text-sm leading-relaxed mt-1 sm:mt-0">Precise before loud. Criterion, never hype.</p>
+          </div>
+        </li>
+      </ul>
     </div>
   </section>
 
