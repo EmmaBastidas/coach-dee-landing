@@ -14,3 +14,6 @@ COPY link /usr/share/nginx/html/link
 COPY privacy /usr/share/nginx/html/privacy
 COPY images /usr/share/nginx/html/images
 COPY media /usr/share/nginx/html/media
+
+# SEO: robots + sitemap en la raíz (v2.2, 2026-10-04)
+COPY robots.txt sitemap.xml /usr/share/nginx/html/

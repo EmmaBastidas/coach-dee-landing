@@ -9,9 +9,10 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Coach Demetrius Santos — Links" />
-  <meta property="og:description" content="Apply for coaching, message on WhatsApp, and more. From the box floor to the podium." />
+  <meta property="og:description" content="Apply for coaching, message on WhatsApp, and more. Individualized CrossFit & HYROX coaching — Union City, NJ & remote." />
   <meta property="og:image" content="https://www.coachdsantos.com/images/bio-bg.jpg" />
-  <meta property="og:url" content="https://www.coachdsantos.com/link" />
+  <meta property="og:url" content="https://www.coachdsantos.com/link/" />
+  <link rel="canonical" href="https://www.coachdsantos.com/link/" />
 
   <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
 
@@ -27,9 +28,9 @@
     tailwind.config = {
       theme: { extend: {
         colors: {
-          ink:'#080D1A', navy:'#16264A', surf:'#1D3160', indigo:'#27407E',
-          blue:'#30519F', sky:'#8CA6DF', royal:'#264189', link:'#9DB4EA',
-          mist:'#EAEEF6', chalk:'#F7F9FD', muted:'#8B95AF',
+          ink:'#0A0A0A', navy:'#141414', surf:'#1C1C1C', indigo:'#262626',
+          blue:'#F5C518', sky:'#F5C518', royal:'#E0B213', link:'#FFD84D',
+          mist:'#EDEDEA', chalk:'#FAFAF8', muted:'#9A9A96',
         },
         fontFamily: {
           display:['"Saira Condensed"','Oswald','sans-serif'],
@@ -42,13 +43,13 @@
   <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <style>
-    body { font-family:'Switzer',system-ui,sans-serif; background:#080D1A; background-image:linear-gradient(165deg,#101C33 0%,#080D1A 45%,#04070E 100%); background-attachment:fixed; }
+    body { font-family:'Switzer',system-ui,sans-serif; background:#0A0A0A; background-image:linear-gradient(170deg,#121212 0%,#0A0A0A 40%,#050505 100%); background-attachment:fixed; }
     h1,.display { font-family:'"Saira Condensed"','Saira Condensed',sans-serif; letter-spacing:.01em; line-height:1.02; }
     .eyebrow { font-family:'"Geist Mono"','Geist Mono',monospace; text-transform:uppercase; letter-spacing:.14em; }
-    .focus-ring:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(48,81,159,.65); }
-    /* dark navy scrim so the buttons + text read over the photo */
+    .focus-ring:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(245,197,24,.6); }
+    /* neutral black scrim so the buttons + text read over the photo */
     .scrim::after{ content:''; position:absolute; inset:0;
-      background:linear-gradient(180deg, rgba(5,9,18,.42) 0%, rgba(5,9,18,.48) 38%, rgba(5,9,18,.97) 80%); }
+      background:linear-gradient(180deg, rgba(5,5,5,.40) 0%, rgba(5,5,5,.48) 38%, rgba(5,5,5,.97) 80%); }
     .scrim>*{ position:relative; z-index:1; }
     .btn { transition:background-color .18s ease, border-color .18s ease, transform .06s ease; }
     .btn:active{ transform:translateY(1px); }
@@ -79,8 +80,8 @@
              class="w-24 h-24 rounded-full object-cover border-2 border-blue/60 shadow-lg shadow-black/50 mx-auto mb-5" />
         <h1 class="font-display font-extrabold text-chalk text-4xl sm:text-5xl">COACH DEMETRIUS SANTOS</h1>
         <p class="eyebrow text-[11px] text-sky mt-3">Individualized Performance Coaching</p>
-        <p class="text-mist/75 text-sm mt-2">CrossFit · HYROX · Strength · Endurance</p>
-        <p class="text-mist/55 text-xs mt-2">Owner &amp; Head Coach · Union City CrossFit, NJ</p>
+        <p class="text-mist/75 text-sm mt-2">CrossFit · HYROX · Strength · Nutrition</p>
+        <p class="text-mist/55 text-xs mt-2">OPEX CCP · CF-L2 · Union City, NJ &amp; remote</p>
       </div>
 
       <!-- Links (ordered for conversion) -->
@@ -88,9 +89,16 @@
 
         <!-- 1 · Primary: Apply -->
         <a href="/#apply"
-           class="btn flex items-center justify-between gap-3 bg-blue hover:bg-royal text-chalk font-semibold rounded-2xl px-6 py-4 focus-ring shadow-lg shadow-blue/25">
-          <span class="flex items-center gap-3"><i data-lucide="clipboard-check" class="w-5 h-5"></i> Start your assessment</span>
+           class="btn flex items-center justify-between gap-3 bg-blue hover:bg-royal text-ink font-semibold rounded-2xl px-6 py-4 focus-ring shadow-lg shadow-blue/25">
+          <span class="flex items-center gap-3"><i data-lucide="clipboard-check" class="w-5 h-5"></i> Apply for coaching</span>
           <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </a>
+
+        <!-- 1b · Pricing -->
+        <a href="/#pricing"
+           class="btn flex items-center justify-between gap-3 bg-blue/15 hover:bg-blue/25 border border-blue/45 text-chalk font-semibold rounded-2xl px-6 py-4 focus-ring">
+          <span class="flex items-center gap-3"><i data-lucide="tag" class="w-5 h-5 text-sky"></i> Coaching plans &amp; pricing</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 text-mist/50"></i>
         </a>
 
         <!-- 2 · Book a call (Calendly) — high intent -->
@@ -127,7 +135,7 @@
           <i data-lucide="arrow-up-right" class="w-4 h-4 text-mist/50"></i>
         </a>
 
-        <p class="eyebrow text-[10px] text-muted text-center pt-4">From the Box Floor to the Podium</p>
+        <p class="eyebrow text-[10px] text-muted text-center pt-4">Coached, not programmed</p>
         <p class="text-center text-[11px] text-muted/80"><a href="/" class="hover:text-mist transition">coachdsantos.com</a></p>
       </nav>
     </div>
