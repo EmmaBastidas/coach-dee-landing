@@ -153,9 +153,12 @@
       }
     }
     if (el.hasAttribute('data-ds-video')) {
-      var v2 = resolve(el.getAttribute('data-ds-video'), scope) || {}, so = el.querySelector('source'), changed = false;
-      if (v2.poster && !sameURL(el.getAttribute('poster') || '', resolveURL(v2.poster))) { el.setAttribute('poster', resolveURL(v2.poster)); }
-      if (v2.src && so && !sameURL(so.getAttribute('src') || '', resolveURL(v2.src))) { so.setAttribute('src', resolveURL(v2.src)); changed = true; }
+      var v2 = resolve(el.getAttribute('data-ds-video'), scope), so = el.querySelector('source'), changed = false;
+      if (v2 && typeof v2 === 'object') {
+        if (v2.poster && !sameURL(el.getAttribute('poster') || '', resolveURL(v2.poster))) { el.setAttribute('poster', resolveURL(v2.poster)); }
+        if (v2.src && so && !sameURL(so.getAttribute('src') || '', resolveURL(v2.src))) { so.setAttribute('src', resolveURL(v2.src)); changed = true; }
+        if (!v2.src && so && so.getAttribute('src')) { so.removeAttribute('src'); el.removeAttribute('poster'); changed = true; } // atleta sin clip: la tarjeta queda solo con la foto
+      }
       if (changed) {
         var card = el.closest('[data-reel]');
         if (card) { var reel = card.querySelector('.reel'); if (reel) reel.classList.add('hidden'); card.classList.remove('reel-on'); delete el.dataset.reelInit; }
@@ -300,8 +303,9 @@
     var slider = document.querySelector('[x-data^="testimonialSlider"]');
     if (slider && Array.isArray(c.testimonials)) {
       var n = c.testimonials.length;
-      slider.setAttribute('x-data', 'testimonialSlider(' + n + ')');
-      if (A && A.$data && slider._x_dataStack) { var d = A.$data(slider); if (d.count !== n) { d.count = n; if (d.cur >= n) d.cur = 0; } }
+      // Antes de que Alpine arranque basta cambiar el atributo; después NO se toca (Alpine lo re-inicializaría y los puntos dejarían de reaccionar): se actualiza el estado.
+      if (!slider._x_dataStack) slider.setAttribute('x-data', 'testimonialSlider(' + n + ')');
+      else if (A && A.$data) { var d = A.$data(slider); if (d.count !== n) { d.count = n; if (d.cur >= n) d.cur = 0; } }
     }
     var chat = document.querySelector('[x-data^="deeChat"]');
     if (chat && c.chat && A && A.$data && chat._x_dataStack) {
