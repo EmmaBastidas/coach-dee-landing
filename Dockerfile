@@ -10,6 +10,8 @@ COPY security-headers.conf /etc/nginx/security-headers.conf
 # Copiar solo los assets del sitio al web root (no el Dockerfile, nginx.conf,
 # README ni .git — .dockerignore los excluye del contexto de build).
 COPY index.html /usr/share/nginx/html/index.html
+# DS Hub (2026-10-19): runtime que aplica lo que Dee publica desde su panel.
+COPY ds-runtime.js /usr/share/nginx/html/ds-runtime.js
 COPY link /usr/share/nginx/html/link
 COPY privacy /usr/share/nginx/html/privacy
 COPY images /usr/share/nginx/html/images
