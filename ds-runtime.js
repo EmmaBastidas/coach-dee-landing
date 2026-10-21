@@ -320,6 +320,9 @@
     if (ct.phone) ct.phone_url = 'tel:' + ct.phone;
     if (ct.email) ct.email_url = 'mailto:' + ct.email;
     if (ct.instagram) ct.instagram_url = 'https://www.instagram.com/' + String(ct.instagram).replace(/^@/, '');
+    // chat: Alpine pinta f.href con :href SIN filtro y la CSP de la landing permite 'unsafe-inline' → un "javascript:" sería XSS.
+    var ch = cfg.content && cfg.content.chat;
+    if (ch && Array.isArray(ch.quick)) ch.quick.forEach(function (f) { if (f && f.href != null && !/^(https?:\/\/|#|mailto:|tel:|\/(?![\/\\]))/i.test(String(f.href))) delete f.href; });
     var m = cfg.content && cfg.content.media;
     if (m && m.hero_video && !m.band_video) m.band_video = m.hero_video;
     var pi = cfg.content ? priceInfo(cfg.content) : null;
