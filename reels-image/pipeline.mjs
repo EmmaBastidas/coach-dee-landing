@@ -2,6 +2,7 @@
 // lavado B/N) → Remotion monta gancho + frases + cierre + música → póster → aviso a PocketBase (callback con secreto).
 import { spawn } from "node:child_process";
 import { promises as fs } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { renderMedia, selectComposition } from "@remotion/renderer";
@@ -122,7 +123,7 @@ export async function runJob(job, ctx) {
     let lastPct = -1;
     await renderMedia({
       composition, serveUrl: ctx.serveUrl, codec: "h264", crf: 20, x264Preset: "fast", audioCodec: "aac", inputProps, outputLocation: outFile,
-      concurrency: ctx.concurrency, timeoutInMilliseconds: 240000, logLevel: "warn", muted: !inputProps.music,
+      concurrency: Math.max(1, Math.min(ctx.concurrency || 1, os.cpus().length)), timeoutInMilliseconds: 240000, // Remotion no admite más hilos que núcleos visibles (cpuLimit del servicio) logLevel: "warn", muted: !inputProps.music,
       onProgress: ({ progress }) => { const pct = Math.floor(progress * 10) * 10; if (pct !== lastPct) { lastPct = pct; ctx.log(`render ${pct}%`); } },
     });
     const posterAt = (tl.hook.from + tl.hook.dur * 0.72) / FPS;
