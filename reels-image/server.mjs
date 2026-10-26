@@ -14,7 +14,7 @@ const STORAGE = process.env.PB_STORAGE || "/pb_storage";
 const OUT = process.env.OUT_DIR || "/out";
 const WORK = process.env.WORK_DIR || "/work";
 const SERVE = process.env.SERVE_URL || path.resolve("build");
-const CONCURRENCY = Number(process.env.RENDER_CONCURRENCY || 2);
+const CONCURRENCY = Number(process.env.RENDER_CONCURRENCY || 1); // en el VPS el contenedor tiene cpuLimit 1.7 → Remotion solo admite 1
 const log = (...a) => console.log(new Date().toISOString(), ...a);
 if (!SECRET) log("WARN: DS_REELS_SECRET vacío: se aceptará cualquier petición (solo para pruebas locales)");
 

@@ -12,7 +12,7 @@ COPY remotion.config.ts tsconfig.json tracks.json server.mjs pipeline.mjs ./
 COPY remotion ./remotion
 COPY public ./public
 RUN npx remotion browser ensure && npx remotion bundle remotion/index.ts --out-dir build --log=warn
-ENV PORT=3000 PB_STORAGE=/pb_storage OUT_DIR=/out WORK_DIR=/work RENDER_CONCURRENCY=2
+ENV PORT=3000 PB_STORAGE=/pb_storage OUT_DIR=/out WORK_DIR=/work RENDER_CONCURRENCY=1
 VOLUME ["/work"]
 EXPOSE 3000
 CMD ["node", "server.mjs"]
