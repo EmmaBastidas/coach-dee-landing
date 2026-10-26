@@ -123,7 +123,8 @@ export async function runJob(job, ctx) {
     let lastPct = -1;
     await renderMedia({
       composition, serveUrl: ctx.serveUrl, codec: "h264", crf: 20, x264Preset: "fast", audioCodec: "aac", inputProps, outputLocation: outFile,
-      concurrency: Math.max(1, Math.min(ctx.concurrency || 1, os.cpus().length)), timeoutInMilliseconds: 240000, // Remotion no admite más hilos que núcleos visibles (cpuLimit del servicio) logLevel: "warn", muted: !inputProps.music,
+      concurrency: Math.max(1, Math.min(ctx.concurrency || 1, os.cpus().length)), timeoutInMilliseconds: 240000,
+      offthreadVideoCacheSizeInBytes: 300 * 1024 * 1024, // el compositor dimensiona su caché por la RAM del host y el contenedor tiene límite → OOM sin esto // Remotion no admite más hilos que núcleos visibles (cpuLimit del servicio) logLevel: "warn", muted: !inputProps.music,
       onProgress: ({ progress }) => { const pct = Math.floor(progress * 10) * 10; if (pct !== lastPct) { lastPct = pct; ctx.log(`render ${pct}%`); } },
     });
     const posterAt = (tl.hook.from + tl.hook.dur * 0.72) / FPS;
