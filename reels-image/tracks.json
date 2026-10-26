@@ -1,0 +1,6 @@
+{
+  "_doc": "Música Pixabay (Content License: uso comercial, sin atribución). offset = segundo del compás donde arranca el reel (el beat lleno cae al terminar el gancho). hookBeats/lineBeats/endBeats = duración en beats de gancho, cada frase y cierre.",
+  "cinematic": { "label": "Cinematic", "file": "audio/rockot-cinematic-hiphop.mp3", "bpm": 71, "offset": 21.157, "hookBeats": 8, "lineBeats": 4, "endBeats": 4, "volume": 0.9 },
+  "hiphop": { "label": "Hip-hop", "file": "audio/mountain-hiphop-sport.mp3", "bpm": 90, "offset": 6.441, "hookBeats": 8, "lineBeats": 6, "endBeats": 4, "volume": 0.85 },
+  "none": { "label": "No music", "file": null, "bpm": 72, "offset": 0, "hookBeats": 8, "lineBeats": 4, "endBeats": 4, "volume": 0 }
+}

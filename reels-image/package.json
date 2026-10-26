@@ -1,0 +1,25 @@
+{
+  "name": "ds-reels",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DS Hub · servicio de reels: recibe un trabajo (clips + textos + música), lo monta con Remotion y avisa a PocketBase",
+  "type": "module",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "bundle": "remotion bundle remotion/index.ts --out-dir build",
+    "start": "node server.mjs",
+    "studio": "remotion studio remotion/index.ts"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.538",
+    "@remotion/fonts": "4.0.538",
+    "@remotion/renderer": "4.0.538",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.538"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "typescript": "5.9.3"
+  }
+}
