@@ -19,7 +19,9 @@ export type ReelProps = {
   textColor: string;
   music: { src: string; trimBefore: number; volume: number } | null;
   cornerLogo: boolean;
+  textSize?: "S" | "M" | "L"; // tamaño del gancho: S deja ver la técnica, L es el original (132 px)
 };
+const HOOK_SIZE = { S: 80, M: 104, L: 132 } as const;
 
 const PAD = 72;
 
@@ -53,7 +55,7 @@ const EndCard: React.FC<{ dur: number; cta: string; url: string; name: string; s
   );
 };
 
-export const Reel: React.FC<ReelProps> = ({ segments, hook, beats, end, accent, textColor, music, cornerLogo, totalFrames }) => {
+export const Reel: React.FC<ReelProps> = ({ segments, hook, beats, end, accent, textColor, music, cornerLogo, totalFrames, textSize = "M" }) => {
   const frame = useCurrentFrame();
   const hookEnd = hook.from + hook.dur;
   const strong = 1 - prog(frame, hookEnd - 10, hookEnd + 8);
@@ -78,7 +80,7 @@ export const Reel: React.FC<ReelProps> = ({ segments, hook, beats, end, accent, 
         {hook.eyebrow ? <Eyebrow text={hook.eyebrow} start={hook.from + 10} exitAt={hookEnd - 14} accent={accent} /> : null}
       </div>
       <div style={{ position: "absolute", left: PAD, right: PAD, bottom: 420, display: "flex", flexDirection: "column", gap: 28 }}>
-        <Headline lines={hook.lines} start={hook.from + 14} size={132} lineStagger={ms(90)} exitAt={hookEnd - 14} accent={accent} color={textColor} />
+        <Headline lines={hook.lines} start={hook.from + 14} size={HOOK_SIZE[textSize] || HOOK_SIZE.M} lineStagger={ms(90)} exitAt={hookEnd - 14} accent={accent} color={textColor} />
         <Rule start={hook.from + 24} width={220} exitAt={hookEnd - 14} accent={accent} />
       </div>
 

@@ -59,21 +59,25 @@ export function planTimeline({ clips, nBeats, music }) {
   return { fps: FPS, total, hook: { from: 0, dur: hookDur }, beats, end: { from: contentFrames, dur: endDur }, segments, track: T, beatSec: beat };
 }
 
-/** Normaliza un tramo: recorte, 1080×1920 cover, 30 fps, lavado; si el clip no alcanza, cámara lenta (≤ 1.6×) o congela el último frame. */
+/** Normaliza un tramo: recorte, 1080×1920 cover, 30 fps, lavado; si el clip no alcanza, cámara lenta (≤ 1.6×); si ni así, cámara lenta suave
+ *  y el tramo SE REPITE hasta cubrir el tiempo (antes se congelaba el último frame: el primer reel de Dee, clip de 5 s en 20 s, quedaba parado). */
 export async function normalize(inFile, outFile, seg, { bw }) {
   const need = seg.dur / FPS, avail = seg.avail;
   const grade = bw ? "hue=s=0.08,eq=contrast=1.12:brightness=-0.02" : "eq=contrast=1.04";
-  const vf = [];
-  let inDur = Math.min(avail, need);
-  if (avail < need) {
-    const ratio = need / avail;
-    if (ratio <= 1.6) { vf.push(`setpts=${ratio.toFixed(4)}*PTS`); inDur = avail; }
-    else { inDur = avail; }
+  const enc = ["-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-threads", "2"];
+  const fit = ["scale=1080:1920:force_original_aspect_ratio=increase", "crop=1080:1920", `fps=${FPS}`, grade];
+  const ratio = avail < need ? need / avail : 1;
+  if (ratio <= 1.6) {
+    const vf = [];
+    if (ratio > 1) vf.push(`setpts=${ratio.toFixed(4)}*PTS`);
+    await run("ffmpeg", ["-y", "-v", "error", "-ss", seg.start.toFixed(3), "-t", (Math.min(avail, need) + 0.25).toFixed(3), "-i", inFile, "-vf", vf.concat(fit).join(","), "-an", "-t", need.toFixed(3), ...enc, outFile]);
+    return;
   }
-  vf.push("scale=1080:1920:force_original_aspect_ratio=increase", "crop=1080:1920", `fps=${FPS}`, grade);
-  if (avail < need && need / avail > 1.6) vf.push(`tpad=stop_mode=clone:stop_duration=${(need - avail).toFixed(3)}`);
-  await run("ffmpeg", ["-y", "-v", "error", "-ss", seg.start.toFixed(3), "-t", (inDur + 0.25).toFixed(3), "-i", inFile, "-vf", vf.join(","), "-an", "-t", need.toFixed(3),
-    "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-threads", "2", outFile]);
+  // clip mucho más corto que el tramo: cámara lenta suave (1.25×) y bucle del tramo hasta completar `need`
+  const loopSrc = outFile + ".loop.mp4";
+  await run("ffmpeg", ["-y", "-v", "error", "-ss", seg.start.toFixed(3), "-t", (avail + 0.25).toFixed(3), "-i", inFile, "-vf", ["setpts=1.25*PTS"].concat(fit).join(","), "-an", "-t", (avail * 1.25).toFixed(3), ...enc, loopSrc]);
+  await run("ffmpeg", ["-y", "-v", "error", "-stream_loop", "-1", "-i", loopSrc, "-t", (need + 0.5).toFixed(3), "-c", "copy", "-movflags", "+faststart", outFile]);
+  await fs.rm(loopSrc, { force: true });
 }
 
 /** Ejecuta un trabajo completo. ctx = { storage, outDir, workDir, serveUrl, baseUrl, log, concurrency } */
@@ -117,6 +121,7 @@ export async function runJob(job, ctx) {
       textColor: /^#[0-9A-Fa-f]{6}$/.test(spec.textColor || "") ? spec.textColor : "#FAFAF8",
       music: T.file ? { src: T.file, trimBefore: Math.round(T.offset * FPS), volume: T.volume } : null,
       cornerLogo: spec.cornerLogo !== false,
+      textSize: ["S", "M", "L"].includes(spec.textSize) ? spec.textSize : "M",
     };
     const composition = await selectComposition({ serveUrl: ctx.serveUrl, id: "Reel", inputProps, logLevel: "warn" });
     const outFile = path.join(ctx.outDir, `${job.job_id}.mp4`);
